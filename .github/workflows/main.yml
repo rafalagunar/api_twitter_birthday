@@ -18,6 +18,7 @@ jobs:
 
       - name: Compile and run Java application
         run: |
+          mvn clean install
           cd src/main/java/org/api # Cambia al directorio donde está tu código fuente
           javac TwitterBirthdayBot.java # Compila la clase
           java TwitterBirthdayBot # Ejecuta tu programa
