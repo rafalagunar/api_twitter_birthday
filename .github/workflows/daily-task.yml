@@ -2,7 +2,7 @@ name: Run Function Daily
 
 on:
   schedule:
-    - cron: '45 15 * * *'
+    - cron: '55 15 * * *'
 
 jobs:
   run-script:
@@ -20,5 +20,6 @@ jobs:
 
       - name: Compile and run Java application
         run: |
-          javac org.api.TwitterBirthdayBot  # Cambia 'TuClase.java' por el nombre de tu archivo Java
-          java main  # Cambia 'TuClase' por el nombre de tu clase principal
+          cd src/org/api # Cambia al directorio donde está tu código fuente
+          javac TwitterBirthdayBot.java # Compila la clase
+          java TwitterBirthdayBot # Ejecuta tu programa
