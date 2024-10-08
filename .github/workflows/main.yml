@@ -1,6 +1,8 @@
 name: Run Function Daily
 
-on: workflow_dispatch
+on:
+  schedule:
+    - cron: '30 15 * * *' # Ejecuta a las 17:30 CEST todos los días
 
 jobs:
   run-script:
