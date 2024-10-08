@@ -8,6 +8,9 @@ import com.github.scribejava.core.oauth.OAuth10aService;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.model.Response;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class TwitterBirthdayBot {
 
     private static final String CONSUMER_KEY = System.getenv("TWITTER_CONSUMER_KEY"); // Tu Consumer Key
@@ -34,7 +37,7 @@ public class TwitterBirthdayBot {
         OAuthRequest request = new OAuthRequest(Verb.POST, TWITTER_API_URL);
 
         // Cuerpo del tweet
-        String tweetText = "Intentando twittear desde IntelIJ utilizando Github Actions";
+        String tweetText = "Intentando twittear desde IntelIJ utilizando Github Actions" + getCurrentTimestamp();;
         request.addHeader("Content-Type", "application/json");
         request.setPayload("{ \"text\": \"" + tweetText + "\" }");
 
@@ -51,63 +54,10 @@ public class TwitterBirthdayBot {
             }
         }
     }
-}
 
-/*
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.HttpResponse;
-
-public class OAuthPostRequest {
-
-    public static void main(String[] args) {
-        // Claves y tokens necesarios para la autenticación OAuth 1.0
-        String consumerKey = "TU_CONSUMER_KEY";
-        String consumerSecret = "TU_CONSUMER_SECRET";
-        String token = "TU_TOKEN";
-        String tokenSecret = "TU_TOKEN_SECRET";
-
-        // Endpoint al que enviar la solicitud
-        String url = "https://api.ejemplo.com/endpoint";
-
-        // Body de ejemplo para la solicitud POST
-        String tweetText = "Intentando twittear desde IntelIJ";
-        String jsonBody = "{ \"text\": \"" + tweetText + "\" }";
-
-        // Crear el consumidor OAuth
-        OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumerKey, consumerSecret);
-        consumer.setTokenWithSecret(token, tokenSecret);
-
-        // Crear el cliente HTTP
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            // Crear la solicitud POST
-            HttpPost request = new HttpPost(url);
-
-            // Establecer el tipo de contenido
-            request.setHeader("Content-Type", "application/json");
-
-            // Añadir el cuerpo JSON a la solicitud
-            StringEntity entity = new StringEntity(jsonBody);
-            request.setEntity(entity);
-
-            // Firmar la solicitud con OAuth
-            consumer.sign(request);
-
-            // Ejecutar la solicitud
-            HttpResponse response = httpClient.execute(request);
-
-            // Imprimir la respuesta
-            System.out.println("Código de respuesta: " + response.getStatusLine().getStatusCode());
-            System.out.println("Respuesta: " + response.getEntity().getContent().toString());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private static String getCurrentTimestamp() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().format(formatter);
     }
 }
 
-*/
