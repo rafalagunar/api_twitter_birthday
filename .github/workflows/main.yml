@@ -18,6 +18,6 @@ jobs:
 
       - name: Compile and run Java application
         run: |
-          cd src/org/api # Cambia al directorio donde está tu código fuente
+          cd src/main/java/org/api # Cambia al directorio donde está tu código fuente
           javac TwitterBirthdayBot.java # Compila la clase
           java TwitterBirthdayBot # Ejecuta tu programa
