@@ -2,7 +2,7 @@ name: Run Function Daily
 
 on:
   schedule:
-    - cron: '45 15 * * *' # Ejecuta a medianoche UTC todos los días
+    - cron: '45 15 * * *'
 
 jobs:
   run-script:
