@@ -27,7 +27,4 @@ jobs:
           mvn clean install
 
       - name: Compile and run Java application
-        run: |
-          cd src/main/java/org/api # Cambia al directorio donde está tu código fuente
-          javac TwitterBirthdayBot.java # Compila la clase
-          java TwitterBirthdayBot # Ejecuta tu programa
+        run: java -cp target/api_twitter_birthday-1.0-SNAPSHOT.jar org.api.TwitterBirthdayBot
