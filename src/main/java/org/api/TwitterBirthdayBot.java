@@ -34,7 +34,7 @@ public class TwitterBirthdayBot {
         OAuthRequest request = new OAuthRequest(Verb.POST, TWITTER_API_URL);
 
         // Cuerpo del tweet
-        String tweetText = "Intentando twittear desde IntelIJ 2";
+        String tweetText = "Intentando twittear desde IntelIJ utilizando Github Actions";
         request.addHeader("Content-Type", "application/json");
         request.setPayload("{ \"text\": \"" + tweetText + "\" }");
 
