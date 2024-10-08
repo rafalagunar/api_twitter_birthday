@@ -1,0 +1,25 @@
+name: Run Function Daily
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment variables
+        run: |
+          echo "TWITTER_ACCESS_TOKEN=${{ secrets.TWITTER_ACCESS_TOKEN }}" >> $GITHUB_ENV
+          echo "TWITTER_ACCESS_TOKEN_SECRET=${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}" >> $GITHUB_ENV
+          echo "TWITTER_CONSUMER_KEY=${{ secrets.TWITTER_CONSUMER_KEY }}" >> $GITHUB_ENV
+          echo "TWITTER_CONSUMER_SECRET=${{ secrets.TWITTER_CONSUMER_SECRET }}" >> $GITHUB_ENV
+
+      - name: Compile and run Java application
+        run: |
+          cd src/org/api # Cambia al directorio donde está tu código fuente
+          javac TwitterBirthdayBot.java # Compila la clase
+          java TwitterBirthdayBot # Ejecuta tu programa
