@@ -16,9 +16,17 @@ jobs:
           echo "TWITTER_CONSUMER_KEY=${{ secrets.TWITTER_CONSUMER_KEY }}" >> $GITHUB_ENV
           echo "TWITTER_CONSUMER_SECRET=${{ secrets.TWITTER_CONSUMER_SECRET }}" >> $GITHUB_ENV
 
-      - name: Compile and run Java application
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21' # O la versión que necesites    
+
+      - name: Run Maven
         run: |
           mvn clean install
+
+      - name: Compile and run Java application
+        run: |
           cd src/main/java/org/api # Cambia al directorio donde está tu código fuente
           javac TwitterBirthdayBot.java # Compila la clase
           java TwitterBirthdayBot # Ejecuta tu programa
