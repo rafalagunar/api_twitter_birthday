@@ -27,4 +27,4 @@ jobs:
           mvn clean install
 
       - name: Compile and run Java application
-        run: java -cp target/api_twitter_birthday-1.0-SNAPSHOT.jar org.api.TwitterBirthdayBot
+        run: java -jar target/api_twitter_birthday-1.0-SNAPSHOT.jar
