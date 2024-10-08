@@ -1,0 +1,24 @@
+name: Run Function Daily
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Ejecuta a medianoche UTC todos los días
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment variables
+        run: |
+          echo "DB_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+
+      - name: Compile and run Java application
+        run: |
+          javac org.api.TwitterBirthdayBot  # Cambia 'TuClase.java' por el nombre de tu archivo Java
+          java main  # Cambia 'TuClase' por el nombre de tu clase principal
