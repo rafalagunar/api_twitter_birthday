@@ -2,7 +2,7 @@ name: Run Function Daily
 
 on:
   schedule:
-    - cron: '55 15 * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   run-script:
