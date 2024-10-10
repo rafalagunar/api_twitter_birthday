@@ -3,6 +3,7 @@ name: Run Function Daily
 on:
   schedule:
     - cron: '30 15 * * *' # Ejecuta a las 17:30 CEST todos los días
+  workflow_dispatch:  # Permite la ejecución manual
 
 jobs:
   run-script:
@@ -18,6 +19,14 @@ jobs:
           echo "TWITTER_CONSUMER_KEY=${{ secrets.TWITTER_CONSUMER_KEY }}" >> $GITHUB_ENV
           echo "TWITTER_CONSUMER_SECRET=${{ secrets.TWITTER_CONSUMER_SECRET }}" >> $GITHUB_ENV
 
+      - name: Install GPG
+        run: sudo apt-get install gnupg
+
+      - name: Decrypt Birthday Data
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.DECRYPTION_KEY }}" \
+          --output src/main/java/org/Data/BirthdayChecker.java src/main/java/org/Data/BirthdayChecker.java.gpg
+
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
@@ -30,3 +39,4 @@ jobs:
 
       - name: Compile and run Java application
         run: java -jar target/api_twitter_birthday-1.0-SNAPSHOT.jar
+
