@@ -7,9 +7,11 @@ import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.model.Response;
+import org.Data.BirthdayChecker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class TwitterBirthdayBot {
 
@@ -21,10 +23,19 @@ public class TwitterBirthdayBot {
     private static final String TWITTER_API_URL = "https://api.twitter.com/2/tweets";
 
     public static void main(String[] args) throws Exception {
-        sendBirthdaymessage();
+        BirthdayChecker birthdayChecker = new BirthdayChecker(); // Inicializa el checker
+        List<String> todaysBirthdaysId = birthdayChecker.checkTodayBirthdays(); // Verifica los cumpleaños de hoy
+        if (todaysBirthdaysId != null && !todaysBirthdaysId.isEmpty()) {
+            for (String birthdayUserId : todaysBirthdaysId) {
+                System.out.println("¡Feliz cumpleaños " + birthdayUserId + "! 🎉");
+                sendBirthdayMessage(birthdayUserId);
+            }
+        } else {
+            System.out.println("No hay cumpleaños hoy.");
+        }
     }
 
-    private static void sendBirthdaymessage() throws Exception {
+    private static void sendBirthdayMessage(String twitterUserId) throws Exception {
         // Crear servicio OAuth
         OAuth10aService service = new ServiceBuilder(CONSUMER_KEY)
                 .apiSecret(CONSUMER_SECRET)
@@ -37,10 +48,9 @@ public class TwitterBirthdayBot {
         OAuthRequest request = new OAuthRequest(Verb.POST, TWITTER_API_URL);
 
         // Cuerpo del tweet
-        String tweetText = "Intentando twittear desde IntelIJ utilizando Github Actions" + getCurrentTimestamp();;
+        String tweetText = "¡Feliz cumpleaños " + twitterUserId + "! 🎉 " + getCurrentTimestamp();
         request.addHeader("Content-Type", "application/json");
         request.setPayload("{ \"text\": \"" + tweetText + "\" }");
-
 
         // Firmar la solicitud con OAuth 1.0a
         service.signRequest(accessToken, request);
@@ -60,4 +70,5 @@ public class TwitterBirthdayBot {
         return LocalDateTime.now().format(formatter);
     }
 }
+
 
